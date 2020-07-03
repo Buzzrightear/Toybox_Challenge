@@ -1,0 +1,43 @@
+<web-app
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+		http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	version="3.1">
+
+	<servlet>
+		<servlet-name>MyHelloWorldServlet</servlet-name>
+		<servlet-class>HelloWorldServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>MyHelloWorldServlet2</servlet-name>
+		<servlet-class>HelloWorldServlet2</servlet-class>
+	</servlet>		
+	<servlet>
+		<servlet-name>NameParameterServlet</servlet-name>
+		<servlet-class>NameParameter</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>DateTimeServlet</servlet-name>
+		<servlet-class>DateTimeServlet</servlet-class>
+	</servlet>
+
+
+	<servlet-mapping>
+		<servlet-name>MyHelloWorldServlet</servlet-name>
+		<url-pattern>/index1.html</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MyHelloWorldServlet2</servlet-name>
+		<url-pattern>/index2.html</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>NameParameterServlet</servlet-name>
+		<url-pattern>/name.html</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DateTimeServlet</servlet-name>
+		<url-pattern>/date.html</url-pattern>
+	</servlet-mapping>
+
+</web-app>

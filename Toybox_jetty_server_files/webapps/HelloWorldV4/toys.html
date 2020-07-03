@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Toybox status</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<style>.w3-btn {margin-bottom:10px;}</style>
+		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+		<script>
+		//request updated toy list from server
+		function getToys(){
+			var ajaxRequest = new XMLHttpRequest();
+			ajaxRequest.onreadystatechange = function(){
+			
+				if(ajaxRequest.readyState == 4){
+					//the request is completed, now check its status
+					if(ajaxRequest.status == 200){
+						document.getElementById("toys").innerHTML = ajaxRequest.responseText;
+					}
+					else{
+						console.log("Status error: " + ajaxRequest.status);
+					}
+				}
+				else{
+					console.log("Ignored readyState: " + ajaxRequest.readyState);
+				}
+			}
+			ajaxRequest.open('GET', '/hello');
+			ajaxRequest.send();
+			
+			setTimeout(getToys, 1000);
+		}
+		
+		//button press manual override - request latch unlock 
+		function buttonOverride(){
+			document.getElementById("init_button_confirmation").innerHTML = "button pressed and function run";
+			var ajaxRequest1 = new XMLHttpRequest();
+			
+			ajaxRequest1.onreadystatechange = function(){
+				if(ajaxRequest1.readyState == 4){
+					//the request is completed, now check its status
+					if(ajaxRequest1.status == 200){
+						document.getElementById("button_confirmation").innerHTML = "Some text: " + ajaxRequest1.responseText;
+					}
+					else{
+						console.log("Status error: " + ajaxRequest1.status);
+						document.getElementById("button_confirmation").innerHTML = "Status error: " + ajaxRequest1.status;
+					}
+				}
+				else{
+					console.log("Ignored readyState: " + ajaxRequest1.readyState);
+					document.getElementById("button_confirmation").innerHTML = "Ignored readyState: " + ajaxRequest1.readyState;
+				}	
+			}
+			ajaxRequest1.open('POST', '/hello');  	
+			ajaxRequest1.send("BUTTON_REQUEST");
+			setTimeout(buttonOverride, 1000);
+		}
+		</script>	
+		
+	</head>
+	<body onload="getToys()">
+		<h1>Toybox Web App</h1>
+			<div id="toys"></div>
+		
+		<!--Button for manual latch override-->
+		<div class="w3-container">
+			<h2>Sweetbox manual override</h2>
+			 <input type="button" class="w3-button w3-white w3-border w3-border-red w3-round-large" value="Unlock box" onclick="buttonOverride()">
+		</div>
+		<div id="init_button_confirmation"></div>
+		<div id="button_confirmation"></div>
+	</body>
+</html>
